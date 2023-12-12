@@ -17,6 +17,10 @@
   -ms-transform: scale(0.7111);
   transform: scale(0.7111);
   /* width:100vw */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .md-header {
