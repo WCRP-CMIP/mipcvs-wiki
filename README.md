@@ -2,10 +2,9 @@
 [![pages-build-deployment](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/pages/pages-build-deployment/badge.svg?branch=production)](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/pages/pages-build-deployment)
 [![MkDocs Build + Deploy](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/deploy.yml)
 
-[![Check markdown links](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/LinkChecker.yml/badge.svg)](https://github.com/WCRP-CMIP/mipcvs-wiki/actions/workflows/LinkChecker.yml) [disabled]
 
 Contents for the MIPCVs wiki. See [wiki.mipcvs.dev](https://wiki.mipcvs.dev/)
-
+---
 
 
 ## Editing the documentation.
