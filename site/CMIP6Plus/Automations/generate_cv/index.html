@@ -750,39 +750,40 @@ options:
   -a API, --api API     api_token
 </code></pre></div>
 <h2 id="program-flow">Program Flow</h2>
-<div class="highlight"><pre><span></span><code>graph TB
+<pre class="mermaid"><code>
+graph TB
 
-subgraph &quot;Initialize Parameters&quot;
+subgraph "Initialize Parameters"
     A[Set relative path]
     B[Set CV prefix]
     C[Define MIP tables prefix]
     D[Define table prefix pattern]
 end
 
-subgraph &quot;Argument Parsing&quot;
+subgraph "Argument Parsing"
     E[Parse commit, date, tag, branch, and API token]
 end
 
-subgraph &quot;Define Functions&quot;
+subgraph "Define Functions"
     F[Read contents from GitHub]
     G[Read JSON from GitHub]
     H[Listify function]
     I[Notnull function]
 end
 
-subgraph &quot;Tunable Parameters&quot;
+subgraph "Tunable Parameters"
     J[Define additional parameters]
 end
 
-subgraph &quot;Other Parameters&quot;
+subgraph "Other Parameters"
     K[Define additional parameters]
 end
 
-subgraph &quot;Read from MIP Tables&quot;
+subgraph "Read from MIP Tables"
     L[Read source_type, frequency, realm, etc. from MIP tables]
 end
 
-subgraph &quot;Main Section&quot;
+subgraph "Main Section"
     M[Loop through structure elements]
     N[Read table_id from GitHub]
     O[Loop through experiments and update source_type]
@@ -791,13 +792,13 @@ subgraph &quot;Main Section&quot;
     R[Handle source_id entries]
 end
 
-subgraph &quot;Metadata and Checksum&quot;
+subgraph "Metadata and Checksum"
     S[Get latest commit from MIP tables]
     T[Update version metadata]
     U[Calculate checksum]
 end
 
-subgraph &quot;Checksum&quot;
+subgraph "Checksum"
     V[Extract branch from branch argument]
     W[Remove old branched CVs if branch is main]
     X[Calculate checksum and compare with the old CV]
@@ -828,7 +829,7 @@ U --&gt; V
 V --&gt; W
 W --&gt; X
 X --&gt; Y
-</code></pre></div>
+</code></pre>
 
 
 
