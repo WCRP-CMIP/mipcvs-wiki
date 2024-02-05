@@ -20,7 +20,7 @@
     
     
       
-        <title>[Action] Generate the CV - MIP CVs [WIKI]</title>
+        <title>[Action] To run create_CV - MIP CVs [WIKI]</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#action-generate-the-cv" class="md-skip">
+        <a href="#action-to-run-create_cv" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              [Action] Generate the CV
+              [Action] To run create_CV
             
           </span>
         </div>
@@ -381,7 +381,7 @@
         
   
   <span class="md-ellipsis">
-    [Action] Generate the CV
+    [Action] To run create_CV
   </span>
   
 
@@ -677,10 +677,9 @@
                   
 
 
-<h1 id="action-generate-the-cv">[Action] Generate the CV</h1>
+<h1 id="action-to-run-create_cv">[Action] To run create_CV</h1>
 <p>The flow of the github action which run when a new commits are pushed to a branch. </p>
-<pre class="mermaid"><code>
-graph TD
+<pre class="mermaid"><code>graph TD
   style AA fill:#003366,stroke:#ffffff,stroke-width:2px;
   style BB fill:#005cbf,stroke:#ffffff,stroke-width:2px;
   style CC fill:#0078d4,stroke:#ffffff,stroke-width:2px;
@@ -704,6 +703,57 @@ graph TD
   style B fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
   style C fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
   style D fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+  style E fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+  style F fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+  style G fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+  style H fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+  style I fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
+
+  A --&gt;|Begin Workflow| B
+  B --&gt;|Determine Necessity based on Git History| C
+  C --&gt;|Configure Git Settings| D
+  D --&gt;|Set Environment Variables| E
+  E --&gt;|Display Variables| F
+  F --&gt;|Print Commit SHA and Path| G
+  G --&gt;|Execute Python Script| H
+  H --&gt;|Write and Commit if Necessary| I
+
+  subgraph AA
+    A
+  end
+
+  subgraph BB
+    B
+  end
+
+  subgraph CC
+    C
+  end
+
+  subgraph DD
+    D
+  end
+
+  subgraph EE
+    E
+  end
+
+  subgraph FF
+    F
+  end
+
+  subgraph GG
+    G
+  end
+
+  subgraph HH
+    H
+  end
+
+  subgraph II
+    I
+  end
+:#ffffff,stroke-width:2px;
   style E fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
   style F fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
   style G fill:#4CAF50,stroke:#ffffff,stroke-width:2px;
