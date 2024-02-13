@@ -521,6 +521,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    preprocess parallel
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -530,6 +541,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#note-on-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note on running:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -761,6 +800,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#note-on-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note on running:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -775,259 +831,277 @@
 
 
 <h1 id="preprocess-parallel">preprocess parallel</h1>
-<p>This is xxxx</p>
-<p>```python </p>
-<h1 id="created-by-keighan-gemmell-keighanchemubcca">Created by Keighan Gemmell (keighan@chem.ubc.ca)</h1>
-<h1 id="this-file-contains-a-wrapped-preprocessing-function-that-detrends-removes-seasonal-cycle-and-executes-a-rolling-average">This file contains a wrapped preprocessing function that detrends, removes seasonal cycle, and executes a rolling average</h1>
-<h1 id="there-is-also-a-normalization-function">There is also a normalization function</h1>
-<h1 id="to-run-this-script-you-will-need-ensure-xarray-is-installed">To run this script you will need ensure xarray is installed</h1>
-<h1 id="change-file-paths-to-where-your-data-is-stored">Change file paths to where your data is stored</h1>
-<p>import xarray as xr
-import numpy as np
-from multiprocessing import Pool
-import s3fs
-import geocat.comp
-import time
-import pandas as pd
-import json
-import os
-import sys
-import pyximport
-pyximport.install(setup_args={"include_dirs":np.get_include()},
-                  reload_support=True)
-sys.path.insert(0,'') #fill in path here</p>
-<h3 id="set-of-functions-for-executing-preprocessing-of-cmip6-data">Set of functions for executing preprocessing of CMIP6 data</h3>
-<h3 id="this-code-used-an-old-aws-s3-storage-system-to-access-cmip6-data-you-will-need-to-add-the-lines-to-pull-data-from-wherever-you-store-it">This code used an old AWS S3 storage system to access CMIP6 data, you will need to add the lines to pull data from wherever you store it</h3>
-<p>df = pd.read_csv("") #name of file here</p>
-<p>proc = 40</p>
-<p>def getData(query:dict):
-    '''
-    Load CMIP6 data into xarray dataframe
-    query (dict or str) - dict or str with data information
-                        - if dict format as {'param':'value','param2':['val1','val2']}
-    '''
-    # Create query string for pandas.DataFrame.query
-    if type(query) is dict:
-        inputStr = " &amp; ".join(["{0}=='{1}'".format(param, query[param]) for param in query])
-    elif type(query) is str: # if its already a string, pass through
-        inputStr=query</p>
-<pre><code># Searches cmip6 data csv for datasets that match given parameters
-df_subset = df.query(inputStr)
-if df_subset.empty:
-    print('data not available for '+inputStr)
-else:
-    # load data
-    for v in df_subset.zstore.values:
-        zstore = v
-        mapper = fs.get_mapper(zstore)
-        ### !!!! Note decode times is false so we can use integer time values !!!!
-        ### open_zarr, so datasets are not loaded yet
-        return_ds = xr.open_zarr(mapper, consolidated=True,decode_times=False)
-return(return_ds)
-</code></pre>
-<p>def removeSC(x:np.ndarray):
-    '''
-    Removes seasonal cycle from monthly data
-    x (np.ndarray) - 3D (time,lat,lon) numpy array
-    '''
-    nt,nx,ny = x.shape # get array dimensions
-    nyears = nt//12
-    # get month means
-    monmean = np.mean(x.reshape(nyears,12,nx,ny),axis=0)
-    for m in range(12): #for each month
-        x[m::12] = x[m::12] - monmean[m]
-    return x</p>
-<p>def detrend(x:np.ndarray,time:np.ndarray):
-    '''
-    remove degree three polynomial fit
-    x (np.ndarray) : 3D (time, lat, lon) numpy array
-    time (np.ndarray) : 1D (time) array 
-    '''
-    nt,nx,ny = x.shape
-    xtemp = x.reshape(nt,nx<em>ny)
-    p = np.polyfit(time, xtemp, deg=3)
-    print(p.shape)
-    fit = p[0]</em>(time[:,np.newaxis] <strong>3)+ p[1]*(time[:,np.newaxis]</strong>2) + p[2]*(time[:,np.newaxis]) + p[3]
-    return x - fit.reshape(nt,nx,ny)</p>
-<p>def preprocess(data:np.ndarray, tdata:np.ndarray, window:int = 31,proc:int = 40):
-    '''
-    Executes the three steps of the preprocessing (deseasonalize, detrend, normalize)
-    data (np.ndarray) : data to process
-    t (np.ndarray) : time values
-    window (integer) : years for the rolling average
-    proc (int) : number of processes for multiprocessing
-    '''</p>
-<pre><code>### remove seasonal cycle
-t1 = time.time()
-print('Deseasonalize')
-deseas = removeSC(data)
-t2 = time.time()
-print('Time : ', t2-t1)
+<p>This file contains a wrapped preprocessing function that detrends, removes seasonal cycle, and executes a rolling average</p>
+<h2 id="note-on-running">Note on running:</h2>
+<ul>
+<li>There is also a normalization function </li>
+<li>To run this script you will need ensure xarray is installed</li>
+<li></li>
+</ul>
+<div class="admonition warn">
+<p class="admonition-title">Note</p>
+<p>Remember to change file paths to where your data is stored </p>
+</div>
+<div class="highlight"><pre><span></span><code>    <span class="c1">#Created by Keighan Gemmell (keighan@chem.ubc.ca)</span>
+    <span class="c1">#This file contains a wrapped preprocessing function that detrends, removes seasonal cycle, and executes a rolling average</span>
+    <span class="c1">#There is also a normalization function </span>
+    <span class="c1">#To run this script you will need ensure xarray is installed</span>
+    <span class="c1">#Change file paths to where your data is stored </span>
 
-### remove cubic fit
-print('Detrend')
-print(tdata.shape)
-detre = detrend(deseas,tdata)
-t3 = time.time()
-print('Time : ',t3-t2)
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+    <span class="kn">import</span> <span class="nn">s3fs</span>
+    <span class="kn">import</span> <span class="nn">geocat.comp</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="kn">import</span> <span class="nn">json</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">pyximport</span>
+    <span class="n">pyximport</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">setup_args</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;include_dirs&quot;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">get_include</span><span class="p">()},</span>
+                    <span class="n">reload_support</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1">#fill in path here</span>
 
-x = detre
+    <span class="c1">### Set of functions for executing preprocessing of CMIP6 data</span>
+    <span class="c1">### This code used an old AWS S3 storage system to access CMIP6 data, you will need to add the lines to pull data from wherever you store it</span>
 
-## function for normalizing - written for passing to multiprocessing
-global normalize
-def normalize(t):
-    '''
-    Calculate anomaly and normalize (repeat boundary values) for monthly data
-    averages across years (12 time step skips)
-    x (np.ndarray) - integer values
-    t (integer) - time
-    window (integer) - years in the averaging window must be odd for now
-    '''
-    assert window%2 == 1
-    tmax = x.shape[0]
-    halfwindow = window//2
-    yr = t//12
-    mon = t%12
-    selx = np.zeros_like(x[:window])
-    # get rolling window (backfills/forward fills with first/last value)
-    if t-halfwindow*12 &lt; 0:
-        selx[:halfwindow - yr] = x[mon]
-        selx[halfwindow-yr:] = x[mon:t+halfwindow*12+1:12]
-    elif t+halfwindow*12+1 &gt; tmax:
-        selx[halfwindow + (tmax//12 - yr):] = x[tmax- 12 + mon]
-        selx[:halfwindow + (tmax//12 - yr)] = x[t - halfwindow*12::12]
-    else:
-        selx = x[t-halfwindow*12:t+halfwindow*12+1:12]
-    # calculate normalized
-    normed = (x[t] - np.mean(selx,axis=0))/np.std(selx,axis=0)
-    return normed
-### run normalization
-print('Normalize')
-ntime = x.shape[0]
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1">#name of file here</span>
 
-# parallelize normalizing across time (trivially parallel)
-with Pool(processes=proc) as pool: 
-    outdata = pool.map(normalize, range(ntime))
-t4 = time.time()
-print('Time : ',t4-t3)
-return np.array(outdata,dtype=np.float32)
-</code></pre>
-<p>def run_preprocess(experiment:str, modelName:str, member:str, variables_in:list,
-            variables_out:list, attribute_path:str = 'variable_defs.json',
-            out_path:str = None,lf_query:str = None,
-            append:bool=False,frequency:str='Amon'):
-    '''
-    Wrapper function that executes the preprocessing pipeline
-    experiment (str) : experiment name (experiment_id)
-    modelName (str) : model name (source_id)
-    member (str) : ensemble member code (member_id) r<em>i</em>p<em>f</em>
-    variables_in (list) : list of variables to grab from CMIP6 archive
-    variables_out (list) : list of variables to calculate and output
-    attribute_path (str) : path to a json file with variable descriptions.
-        Note if you request a variable in variables_out that is not a CMOR variable, it must
-        be defined in the attribute .json
-    out_path (str) : file name for output
-    lf_query (str) : query string to pass to pandas.DataFram.query  recommended to pass this,
-        otherwise the script is likely to fail due to not finding sftlf variable
-        set to False to skip adding the landfraction, set to None to attempt to find land fraction
-        for the selected experiment and ensemble member
-    append (str) : append variables_out to an existing netcdf file
-    frequency (str) : CMIP table to get data from (e.g. Amon, Omon, Aday - table_id). 
-    '''
-    # Default out_path
-    if out_path is None: 
-        out_path = ''.format(modelName, member, experiment)</p>
-<pre><code>print('Preprocessing for {0} {1} {2}'.format(modelName,experiment,member))
+    <span class="n">proc</span> <span class="o">=</span> <span class="mi">40</span>
 
-# if we are appending to an existing netcdf
-# load the dataset and determine the existing variables
-if append:
-    if os.path.isfile(out_path):
-        existing = xr.open_dataset(out_path)
-        existing_variables = list(existing.variables)
-        del existing
-    else:
-        print('append = True, but no existing file. Setting to append = False')
-        append = False
+    <span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="n">query</span><span class="p">:</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Load CMIP6 data into xarray dataframe</span>
+<span class="sd">        query (dict or str) - dict or str with data information</span>
+<span class="sd">                            - if dict format as {&#39;param&#39;:&#39;value&#39;,&#39;param2&#39;:[&#39;val1&#39;,&#39;val2&#39;]}</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Create query string for pandas.DataFrame.query</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">inputStr</span> <span class="o">=</span> <span class="s2">&quot; &amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">==&#39;</span><span class="si">{1}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="n">param</span><span class="p">])</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">query</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span> <span class="c1"># if its already a string, pass through</span>
+            <span class="n">inputStr</span><span class="o">=</span><span class="n">query</span>
 
-## Load in data (could make faster with open_mfdataset?)
-dict_query = {'source_id':modelName, 'table_id':frequency, 'experiment_id':experiment, 'member_id':member}
-data = {}
-for var in variables_in:
-    dict_query['variable_id'] = var
-    data[var] = getData(dict_query)
+        <span class="c1"># Searches cmip6 data csv for datasets that match given parameters</span>
+        <span class="n">df_subset</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">inputStr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df_subset</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;data not available for &#39;</span><span class="o">+</span><span class="n">inputStr</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># load data</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">df_subset</span><span class="o">.</span><span class="n">zstore</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                <span class="n">zstore</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="n">mapper</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">get_mapper</span><span class="p">(</span><span class="n">zstore</span><span class="p">)</span>
+                <span class="c1">### !!!! Note decode times is false so we can use integer time values !!!!</span>
+                <span class="c1">### open_zarr, so datasets are not loaded yet</span>
+                <span class="n">return_ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_zarr</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">consolidated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">return_ds</span><span class="p">)</span>
 
-# Load land fraction data
-if lf_query is None:
-    # if query isn't provided, attempt to load from current experiment
-    lf_query  = "source_id=='{0}' &amp; table_id=='fx' &amp; experiment_id=='{1}' &amp;  member_id=='{2}' &amp; variable_id=='sftlf'".format(modelName,experiment,member)
-elif lf_query: # set lf_query=False to skip
-    data['sftlf'] = getData(lf_query) ## land area fraction as %
+    <span class="k">def</span> <span class="nf">removeSC</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Removes seasonal cycle from monthly data</span>
+<span class="sd">        x (np.ndarray) - 3D (time,lat,lon) numpy array</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nt</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># get array dimensions</span>
+        <span class="n">nyears</span> <span class="o">=</span> <span class="n">nt</span><span class="o">//</span><span class="mi">12</span>
+        <span class="c1"># get month means</span>
+        <span class="n">monmean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nyears</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span> <span class="c1">#for each month</span>
+            <span class="n">x</span><span class="p">[</span><span class="n">m</span><span class="p">::</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">m</span><span class="p">::</span><span class="mi">12</span><span class="p">]</span> <span class="o">-</span> <span class="n">monmean</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span>
 
-# Attributes for derived variables
-d_attr = json.load(open(attribute_path))
+    <span class="k">def</span> <span class="nf">detrend</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">time</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        remove degree three polynomial fit</span>
+<span class="sd">        x (np.ndarray) : 3D (time, lat, lon) numpy array</span>
+<span class="sd">        time (np.ndarray) : 1D (time) array </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nt</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">xtemp</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span><span class="n">nx</span><span class="o">*</span><span class="n">ny</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">xtemp</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">fit</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">time</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">time</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">time</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">fit</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span><span class="n">nx</span><span class="p">,</span><span class="n">ny</span><span class="p">)</span>
 
-processed = {} # preprocessed data
-orig = {} # raw data
-for var in variables_out:
-    if append and var in existing_variables:
-        # skip existing variables if in append mode
-        print('{0} already exists, skipping'.format(var))
-        variables_out.remove(var)
-        continue
-    print('-----------------')
-    print(var)
-    print('-----------------')
-    if var in variables_in: 
-        # If taking variable directly from CMIP
-        signs = [1]
-        variables = [var]
-        attributes = {'long_name': data[var][var].long_name, 'units':data[var][var].units}
-    elif var in d_attr: 
-        # If calculating a variable from CMIP variables
-        signs = d_attr[var]['signs']
-        attributes = d_attr[var]
-        variables = d_attr[var]['variables']
-    else: # Something's wrong (missing variable or definition)
-        print('missing variable definition in {0}'.format(attribute_path))
-        continue
-    if 'integral' in attributes:
-        # if we are integrating a 3D variable
-        processed[var], orig[var] = calc_var_integral(data,variables[0],var,attributes = attributes)
-    else:
-        processed[var], orig[var] = calc_var(data, variables, signs, var,attributes = attributes)
+    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tdata</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">31</span><span class="p">,</span><span class="n">proc</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Executes the three steps of the preprocessing (deseasonalize, detrend, normalize)</span>
+<span class="sd">        data (np.ndarray) : data to process</span>
+<span class="sd">        t (np.ndarray) : time values</span>
+<span class="sd">        window (integer) : years for the rolling average</span>
+<span class="sd">        proc (int) : number of processes for multiprocessing</span>
+<span class="sd">        &#39;&#39;&#39;</span>
 
-# Cast the fixed land fraction data into a time series
-if lf_query: # set lf_query=False to skip
-    # tile in time
-    sftlfOut, b2 = xr.broadcast(data['sftlf'].sftlf, data[variables_in[0]][variables_in[0]], exclude=('lat','lon'))
-    sftlfOut=sftlfOut.where(sftlfOut==0,1) ### data has values as 0 for ocean or 100 for land sa making 100 as 1
-    lsMask = xr.DataArray(name='lsMask', data=sftlfOut.load(), attrs={'long_name':'land_sea_mask', 'Description':'land fraction of each grid cell 0 for ocean and 1 for land'}, 
-                        coords={'time': data[variables_in[0]].time,'lat': data['sftlf'].lat,'lon': data['sftlf'].lon})
+        <span class="c1">### remove seasonal cycle</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Deseasonalize&#39;</span><span class="p">)</span>
+        <span class="n">deseas</span> <span class="o">=</span> <span class="n">removeSC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time : &#39;</span><span class="p">,</span> <span class="n">t2</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span>
 
-# change time to original values (time values get altered in calc_var)
-for var in variables_out:
-    processed[var]['time'] = data[variables_in[0]].time
-    orig[var]['time'] = data[variables_in[0]].time
+        <span class="c1">### remove cubic fit</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Detrend&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tdata</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">detre</span> <span class="o">=</span> <span class="n">detrend</span><span class="p">(</span><span class="n">deseas</span><span class="p">,</span><span class="n">tdata</span><span class="p">)</span>
+        <span class="n">t3</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time : &#39;</span><span class="p">,</span><span class="n">t3</span><span class="o">-</span><span class="n">t2</span><span class="p">)</span>
 
-# Save one DataArray as dataset
-var = variables_out[0]
-output_ds = processed[var].to_dataset(name = var+'_pre')
-output_ds[var] = orig[var]
-for var in variables_out[1:]:
-    # Add next DataArray to existing dataset (ds)
-    output_ds[var+'_pre'] = processed[var]
-    output_ds[var] = orig[var]
-# add the landfraction query
-if lf_query:
-    output_ds['lsMask'] = lsMask
-print('Write to file')
-if append:
-    output_ds.to_netcdf(path=out_path,mode='a',format='NETCDF4')
-else:
-    output_ds.to_netcdf(path=out_path,mode='w',format='NETCDF4')
-    ```
-</code></pre>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">detre</span>
+
+        <span class="c1">## function for normalizing - written for passing to multiprocessing</span>
+        <span class="k">global</span> <span class="n">normalize</span>
+        <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            Calculate anomaly and normalize (repeat boundary values) for monthly data</span>
+<span class="sd">            averages across years (12 time step skips)</span>
+<span class="sd">            x (np.ndarray) - integer values</span>
+<span class="sd">            t (integer) - time</span>
+<span class="sd">            window (integer) - years in the averaging window must be odd for now</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            <span class="k">assert</span> <span class="n">window</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">tmax</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">halfwindow</span> <span class="o">=</span> <span class="n">window</span><span class="o">//</span><span class="mi">2</span>
+            <span class="n">yr</span> <span class="o">=</span> <span class="n">t</span><span class="o">//</span><span class="mi">12</span>
+            <span class="n">mon</span> <span class="o">=</span> <span class="n">t</span><span class="o">%</span><span class="mi">12</span>
+            <span class="n">selx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">window</span><span class="p">])</span>
+            <span class="c1"># get rolling window (backfills/forward fills with first/last value)</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">-</span><span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">selx</span><span class="p">[:</span><span class="n">halfwindow</span> <span class="o">-</span> <span class="n">yr</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">mon</span><span class="p">]</span>
+                <span class="n">selx</span><span class="p">[</span><span class="n">halfwindow</span><span class="o">-</span><span class="n">yr</span><span class="p">:]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">mon</span><span class="p">:</span><span class="n">t</span><span class="o">+</span><span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">t</span><span class="o">+</span><span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">tmax</span><span class="p">:</span>
+                <span class="n">selx</span><span class="p">[</span><span class="n">halfwindow</span> <span class="o">+</span> <span class="p">(</span><span class="n">tmax</span><span class="o">//</span><span class="mi">12</span> <span class="o">-</span> <span class="n">yr</span><span class="p">):]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">tmax</span><span class="o">-</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">mon</span><span class="p">]</span>
+                <span class="n">selx</span><span class="p">[:</span><span class="n">halfwindow</span> <span class="o">+</span> <span class="p">(</span><span class="n">tmax</span><span class="o">//</span><span class="mi">12</span> <span class="o">-</span> <span class="n">yr</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span><span class="p">::</span><span class="mi">12</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selx</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="o">-</span><span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span><span class="p">:</span><span class="n">t</span><span class="o">+</span><span class="n">halfwindow</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+            <span class="c1"># calculate normalized</span>
+            <span class="n">normed</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">selx</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">selx</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">normed</span>
+        <span class="c1">### run normalization</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normalize&#39;</span><span class="p">)</span>
+        <span class="n">ntime</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># parallelize normalizing across time (trivially parallel)</span>
+        <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="n">proc</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span> 
+            <span class="n">outdata</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntime</span><span class="p">))</span>
+        <span class="n">t4</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time : &#39;</span><span class="p">,</span><span class="n">t4</span><span class="o">-</span><span class="n">t3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">outdata</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run_preprocess</span><span class="p">(</span><span class="n">experiment</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">modelName</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">member</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">variables_in</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span>
+                <span class="n">variables_out</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">attribute_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;variable_defs.json&#39;</span><span class="p">,</span>
+                <span class="n">out_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="n">lf_query</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">append</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">frequency</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;Amon&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Wrapper function that executes the preprocessing pipeline</span>
+<span class="sd">        experiment (str) : experiment name (experiment_id)</span>
+<span class="sd">        modelName (str) : model name (source_id)</span>
+<span class="sd">        member (str) : ensemble member code (member_id) r*i*p*f*</span>
+<span class="sd">        variables_in (list) : list of variables to grab from CMIP6 archive</span>
+<span class="sd">        variables_out (list) : list of variables to calculate and output</span>
+<span class="sd">        attribute_path (str) : path to a json file with variable descriptions.</span>
+<span class="sd">            Note if you request a variable in variables_out that is not a CMOR variable, it must</span>
+<span class="sd">            be defined in the attribute .json</span>
+<span class="sd">        out_path (str) : file name for output</span>
+<span class="sd">        lf_query (str) : query string to pass to pandas.DataFram.query  recommended to pass this,</span>
+<span class="sd">            otherwise the script is likely to fail due to not finding sftlf variable</span>
+<span class="sd">            set to False to skip adding the landfraction, set to None to attempt to find land fraction</span>
+<span class="sd">            for the selected experiment and ensemble member</span>
+<span class="sd">        append (str) : append variables_out to an existing netcdf file</span>
+<span class="sd">        frequency (str) : CMIP table to get data from (e.g. Amon, Omon, Aday - table_id). </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Default out_path</span>
+        <span class="k">if</span> <span class="n">out_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="n">out_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modelName</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">experiment</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Preprocessing for </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modelName</span><span class="p">,</span><span class="n">experiment</span><span class="p">,</span><span class="n">member</span><span class="p">))</span>
+
+        <span class="c1"># if we are appending to an existing netcdf</span>
+        <span class="c1"># load the dataset and determine the existing variables</span>
+        <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">out_path</span><span class="p">):</span>
+                <span class="n">existing</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
+                <span class="n">existing_variables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">existing</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;append = True, but no existing file. Setting to append = False&#39;</span><span class="p">)</span>
+                <span class="n">append</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1">## Load in data (could make faster with open_mfdataset?)</span>
+        <span class="n">dict_query</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;source_id&#39;</span><span class="p">:</span><span class="n">modelName</span><span class="p">,</span> <span class="s1">&#39;table_id&#39;</span><span class="p">:</span><span class="n">frequency</span><span class="p">,</span> <span class="s1">&#39;experiment_id&#39;</span><span class="p">:</span><span class="n">experiment</span><span class="p">,</span> <span class="s1">&#39;member_id&#39;</span><span class="p">:</span><span class="n">member</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_in</span><span class="p">:</span>
+            <span class="n">dict_query</span><span class="p">[</span><span class="s1">&#39;variable_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">getData</span><span class="p">(</span><span class="n">dict_query</span><span class="p">)</span>
+
+        <span class="c1"># Load land fraction data</span>
+        <span class="k">if</span> <span class="n">lf_query</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if query isn&#39;t provided, attempt to load from current experiment</span>
+            <span class="n">lf_query</span>  <span class="o">=</span> <span class="s2">&quot;source_id==&#39;</span><span class="si">{0}</span><span class="s2">&#39; &amp; table_id==&#39;fx&#39; &amp; experiment_id==&#39;</span><span class="si">{1}</span><span class="s2">&#39; &amp;  member_id==&#39;</span><span class="si">{2}</span><span class="s2">&#39; &amp; variable_id==&#39;sftlf&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modelName</span><span class="p">,</span><span class="n">experiment</span><span class="p">,</span><span class="n">member</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">lf_query</span><span class="p">:</span> <span class="c1"># set lf_query=False to skip</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sftlf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getData</span><span class="p">(</span><span class="n">lf_query</span><span class="p">)</span> <span class="c1">## land area fraction as %</span>
+
+        <span class="c1"># Attributes for derived variables</span>
+        <span class="n">d_attr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">attribute_path</span><span class="p">))</span>
+
+        <span class="n">processed</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># preprocessed data</span>
+        <span class="n">orig</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># raw data</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_out</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">append</span> <span class="ow">and</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">existing_variables</span><span class="p">:</span>
+                <span class="c1"># skip existing variables if in append mode</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> already exists, skipping&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">))</span>
+                <span class="n">variables_out</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-----------------&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_in</span><span class="p">:</span> 
+                <span class="c1"># If taking variable directly from CMIP</span>
+                <span class="n">signs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="p">]</span>
+                <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">long_name</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">units</span><span class="p">}</span>
+            <span class="k">elif</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">d_attr</span><span class="p">:</span> 
+                <span class="c1"># If calculating a variable from CMIP variables</span>
+                <span class="n">signs</span> <span class="o">=</span> <span class="n">d_attr</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;signs&#39;</span><span class="p">]</span>
+                <span class="n">attributes</span> <span class="o">=</span> <span class="n">d_attr</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+                <span class="n">variables</span> <span class="o">=</span> <span class="n">d_attr</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># Something&#39;s wrong (missing variable or definition)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;missing variable definition in </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute_path</span><span class="p">))</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="s1">&#39;integral&#39;</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+                <span class="c1"># if we are integrating a 3D variable</span>
+                <span class="n">processed</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">orig</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_var_integral</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">var</span><span class="p">,</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">processed</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">orig</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_var</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">signs</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">)</span>
+
+        <span class="c1"># Cast the fixed land fraction data into a time series</span>
+        <span class="k">if</span> <span class="n">lf_query</span><span class="p">:</span> <span class="c1"># set lf_query=False to skip</span>
+            <span class="c1"># tile in time</span>
+            <span class="n">sftlfOut</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;sftlf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sftlf</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">variables_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">variables_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">exclude</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;lat&#39;</span><span class="p">,</span><span class="s1">&#39;lon&#39;</span><span class="p">))</span>
+            <span class="n">sftlfOut</span><span class="o">=</span><span class="n">sftlfOut</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sftlfOut</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c1">### data has values as 0 for ocean or 100 for land sa making 100 as 1</span>
+            <span class="n">lsMask</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;lsMask&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">sftlfOut</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;long_name&#39;</span><span class="p">:</span><span class="s1">&#39;land_sea_mask&#39;</span><span class="p">,</span> <span class="s1">&#39;Description&#39;</span><span class="p">:</span><span class="s1">&#39;land fraction of each grid cell 0 for ocean and 1 for land&#39;</span><span class="p">},</span> 
+                                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">variables_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">time</span><span class="p">,</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sftlf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span><span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sftlf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lon</span><span class="p">})</span>
+
+        <span class="c1"># change time to original values (time values get altered in calc_var)</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_out</span><span class="p">:</span>
+            <span class="n">processed</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">variables_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">time</span>
+            <span class="n">orig</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">variables_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">time</span>
+
+        <span class="c1"># Save one DataArray as dataset</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">variables_out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">output_ds</span> <span class="o">=</span> <span class="n">processed</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">to_dataset</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="n">var</span><span class="o">+</span><span class="s1">&#39;_pre&#39;</span><span class="p">)</span>
+        <span class="n">output_ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_out</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="c1"># Add next DataArray to existing dataset (ds)</span>
+            <span class="n">output_ds</span><span class="p">[</span><span class="n">var</span><span class="o">+</span><span class="s1">&#39;_pre&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+            <span class="n">output_ds</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+        <span class="c1"># add the landfraction query</span>
+        <span class="k">if</span> <span class="n">lf_query</span><span class="p">:</span>
+            <span class="n">output_ds</span><span class="p">[</span><span class="s1">&#39;lsMask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lsMask</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Write to file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">append</span><span class="p">:</span>
+            <span class="n">output_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">out_path</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_ds</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">out_path</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">)</span>
+</code></pre></div>
 
 
 
