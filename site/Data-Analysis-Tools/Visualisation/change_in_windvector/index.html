@@ -585,6 +585,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Change in Wind speed and Direction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -594,6 +605,43 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adapt-the-preprocessing-as-adequate-for-your-research-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapt the preprocessing as adequate for your research question
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-template-of-the-program-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example template of the program structure.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -761,6 +809,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adapt-the-preprocessing-as-adequate-for-your-research-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adapt the preprocessing as adequate for your research question
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-template-of-the-program-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example template of the program structure.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -775,18 +849,71 @@
 
 
 <h1 id="change-in-wind-speed-and-direction">Change in Wind speed and Direction</h1>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Created by anjakatzenberger (anja.katzenberger@pik-potsdam.de)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<p>Created by <a href="anja.katzenberger@pik-potsdam.de">anjakatzenberger</a></p>
+<p>This code provides changes in wind speed and wind direction for a subset of CMIP6 models</p>
+<ol>
+<li>The first figure (a panel of 2x3 wind fields) is written for 6 CMIP6 models</li>
+<li>The second figure gives a multi model mean of the models given</li>
+<li>The input data is preprocessed using CDOs (selected time period, selected altitude of winds, as well as mean over time for specific months)</li>
+</ol>
+<h3 id="adapt-the-preprocessing-as-adequate-for-your-research-question">Adapt the preprocessing as adequate for your research question</h3>
+<h3 id="example-template-of-the-program-structure">Example template of the program structure.</h3>
+<pre class="mermaid"><code>graph TD
+  subgraph "Initialize Directories"
+    A[udir_future]
+    B[vdir_future]
+    C[udir]
+    D[vdir]
+    E[dir_save]
+  end
 
-<span class="c1">### This code provides changes in wind speed and wind direction for a subset of CMIP6 models</span>
-<span class="c1">### The first figure (a panel of 2x3 wind fields) is written for 6 CMIP6 models</span>
-<span class="c1">### The second figure gives a multi model mean of the models given</span>
-<span class="c1">### The input data is preprocessed using CDOs (selected time period, selected altitude of winds, as well as mean over time for specific months)</span>
-<span class="c1">### Adapt the preprocessing as adequate for your research question</span>
-</code></pre></div>
+  subgraph "List Files"
+    F[List files in udir_future]
+    G[List files in vdir_future]
+    H[List files in udir]
+    I[List files in vdir]
+  end
+
+  subgraph "Create Wind Fields"
+    J[Loop through models]
+    K[Load u and v data]
+    L[Calculate wind speed]
+    M[Plot wind fields]
+    N[Save figure]
+  end
+
+  subgraph "Multi-Model Mean"
+    O[Create arrays for wind speed, ua_diff, va_diff]
+    P[Loop through models]
+    Q[Load u and v data]
+    R[Calculate ua_diff and va_diff]
+    S[Calculate mean wind speed]
+    T[Plot mean wind speed]
+    U[Save figure]
+  end
+
+  A --&gt; J
+  B --&gt; J
+  C --&gt; J
+  D --&gt; J
+  E --&gt; M
+  F --&gt; J
+  G --&gt; J
+  H --&gt; J
+  I --&gt; J
+  J --&gt; K
+  K --&gt; L
+  L --&gt; M
+  M --&gt; N
+  N --&gt; |Repeat for each model| J
+  O --&gt; P
+  P --&gt; Q
+  Q --&gt; R
+  R --&gt; O
+  R --&gt; S
+  S --&gt; T
+  T --&gt; U
+</code></pre>
 
 
 
