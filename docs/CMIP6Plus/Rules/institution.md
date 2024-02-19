@@ -1,6 +1,6 @@
 # Institutions
 
-???+ abstract "Instructions"
+???- abstract "Instructions"
 
     The rule guides describe what is required to submit a new item, and how to correctly fill out the forms and avoid submission errors. 
 
