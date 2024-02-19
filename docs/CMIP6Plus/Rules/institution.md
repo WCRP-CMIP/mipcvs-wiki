@@ -1,6 +1,6 @@
 # Institutions
 
-???+ abstract "Instructions"
+???- abstract "Instructions"
 
     The rule guides describe what is required to submit a new item, and how to correctly fill out the forms and avoid submission errors. 
 
@@ -12,6 +12,8 @@ To check if an institutions has already been added, try adding its ROR code and 
 This is what we shall use to identify an institution within relevant scripts. This must be unique and should not change. 
 
 ??? warning "Once data has been submitted using this handle, it cannot be changed, even if your institute rebrands."
+
+    <add Link to document here>
 
 *Rules* : <b> Unicode, `[A-z]`, case-sensitive. Max 25 (tbc) characters. </b>
 
