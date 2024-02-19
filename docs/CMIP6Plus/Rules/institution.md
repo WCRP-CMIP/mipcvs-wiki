@@ -1,12 +1,12 @@
 # Institutions
 
-???- abstract "Instructions"
+???+ abstract "Instructions"
 
     The rule guides describe what is required to submit a new item, and how to correctly fill out the forms and avoid submission errors. 
 
-New institutions are added to the [cmor-mip-tables](https://github.com/PCMDI/mip-cmor-tables/blob/main/MIP_institutions.json). 
+    New institutions are added to the [cmor-mip-tables](https://github.com/PCMDI/mip-cmor-tables/blob/main/MIP_institutions.json). 
 
-To check if an institutions has already been added, try adding its ROR code and acronym in the [new institution] (add link here) submission form. 
+    To check if an institutions has already been added, try adding its ROR code and acronym in the [new institution] (add link here) submission form. 
 
 ## Acronym
 This is what we shall use to identify an institution within relevant scripts. This must be unique and should not change. 
