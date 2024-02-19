@@ -1,6 +1,6 @@
 # Institutions
 
-???- abstract "Instructions"
+???+ abstract "Instructions"
 
     The rule guides describe what is required to submit a new item, and how to correctly fill out the forms and avoid submission errors. 
 
@@ -25,8 +25,8 @@ This is the full name of the institution. This should match >90% with one of the
 
 
 ## ROR
-<img src='https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg' style='height:20px'/>
-ROR [Research Organisation Repository](ror.org) is a global, community-led registry of open persistent identifiers for research organizations. This gives us an ability to assign a unique identifier to each institution, which persists even after they have rebranded, merged, split, shut down, and re-emerged. 
+<img src='https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg' style='height:3em'/>
+[Research Organisation Repository](ror.org) is a global, community-led registry of open persistent identifiers for research organizations. This gives us an ability to assign a unique identifier to each institution, which persists even after they have rebranded, merged, split, shut down, and re-emerged. 
 
 *Rules* : <b> An alphanumeric string of 9 characters as defined by ROR.org entry. </b>
 
