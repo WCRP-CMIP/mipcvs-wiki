@@ -1,7 +1,7 @@
 # Creating a dispatch action
 
 A dispatch action is one where a call to the github API triggers an action, and consequently a script. 
-Our usage case for CMIP6Plus is the submission of new data from a web from or API to update a file. 
+Our usage case for CMIP6Plus is the submission of new data from a web form or API to update a file. 
 
 ## How to  submit
 
