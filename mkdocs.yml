@@ -11,7 +11,7 @@ theme:
     - search
     - optimize
 
-  copyright: CCBY04 2023+ Daniel Ellis for the CMIP-IPO  (made with material for mkdocs)
+  copyright: CCBY04 2023+ Daniel Ellis for the CMIP-IPO
   palette: 
     # Palette toggle for light mode
     - scheme: default
