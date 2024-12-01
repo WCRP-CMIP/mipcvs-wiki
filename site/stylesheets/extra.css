@@ -1,9 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
-
 .md-footer {
   background-color: transparent;
   backdrop-filter: blur(10px);
-  color: #2d898b !important;
+  color: #ff1744 !important;
 }
 .md-footer__link .md-footer__title{
   margin:0;
@@ -26,16 +24,7 @@
 }
 
 .md-header {
-  background-color: #3587a4
-}
-
-.md-header__title{
-  color: white !important;
-  font-family: "Akshar", sans-serif;
-}
-
-h1,h2{
-  font-family: "Akshar", sans-serif;
+  background-color: #f2b30d
 }
 
 .md-search__form {
@@ -48,9 +37,4 @@ body{
   top:0;
   width:100vw;
   position:absolute;
-}
-
-*{
- 
-  font-family: "Plus Jakarta Sans", serif;
 }
