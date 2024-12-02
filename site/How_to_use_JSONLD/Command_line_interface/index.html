@@ -420,6 +420,99 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple use case.
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple use case.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collapsing-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collapsing entries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data View
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quitting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-all-the-dependancies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting all the dependancies.
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting all the dependancies.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-all-the-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing all the links
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saving the output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rendering-all-items-in-a-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rendering all items in a directory
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -701,6 +794,99 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple use case.
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple use case.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collapsing-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Collapsing entries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data View
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quitting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-all-the-dependancies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting all the dependancies.
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting all the dependancies.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-all-the-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listing all the links
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-the-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Saving the output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rendering-all-items-in-a-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rendering all items in a directory
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -724,6 +910,68 @@
 </code></pre></div>
 ! warning
 Beware that this repository is currently rapidly in development, and you will have to upgrade the installed version regularly. </p>
+<h2 id="arguments">Arguments</h2>
+<p>The arguments can be found by typing <code>cmipld --help</code> once installed. These are: 
+<div class="highlight"><pre><span></span><code>CLI entry point for the JSON-LD processor. 
+Process JSON-LD documents and extract dependencies 
+
+To toggle between data and line mode, press &#39;m&#39;. 
+To exit the viewer, press &#39;q&#39;. Maintainer: Dan Ellis (CMIP IPO)
+
+
+positional arguments:
+    url                   URL of the JSON-LD document to process
+
+options:
+    -h, --help            show this help message and exit
+    --deps, -d            Extract dependencies
+    --relative            Use relative URLs for dependencies
+    --no-compact, -nc     Do not compact the document
+    --expand-ctx, -ctx    Do not expand context
+    --no-expand-links, -nl
+                            Do not expand linked documents
+    --output OUTPUT, -o OUTPUT
+                            Output file (default: stdout)
+    --no-interactive, -n  Interactive Playground
+</code></pre></div></p>
+<h2 id="simple-use-case">Simple use case.</h2>
+<p>The simplest use case is to view the url of a given file. The function recursively populates all the links if they exist. </p>
+<div class="highlight"><pre><span></span><code>cmipld wcrp-universe:activity/cmip
+</code></pre></div>
+<p>This will give us in interactive view of the returned result. </p>
+<p><image src='/assets/demo_images/cli1.png'/></p>
+<h3 id="collapsing-entries">Collapsing entries</h3>
+<p>Should we want to we can also scroll down and use the spacebar to collpse any fields we are not interested in. </p>
+<p><image src='/assets/demo_images/cli2.png'/></p>
+<h3 id="data-view">Data View</h3>
+<p>For additional information we could also trigger the data view by pressing <code>m</code> to give us an alternative representation. </p>
+<p><image src='/assets/demo_images/cli3.png'/></p>
+<h3 id="quitting">Quitting</h3>
+<p>To quit the viewer press <code>q</code>.</p>
+<h2 id="getting-all-the-dependancies">Getting all the dependancies.</h2>
+<p>When opening a file, we get a small amount of additional information. For instance if we wish to open <code>cmip6plus:source/miroc6</code> we get a notification of the expansion of the prefix (to ensure this is correct) and a warning that one of the links does not appear to have resolved correctly. </p>
+<p><image src='/assets/demo_images/cli5.png'/></p>
+<h3 id="listing-all-the-links">Listing all the links</h3>
+<p>To open all the links currently present in the JSONLD file we can use the <code>--deps</code> or <code>-d</code> flag when supplying our cli arguments. </p>
+<p><image src='/assets/demo_images/cli4.png'/></p>
+<h2 id="saving-the-output">Saving the output</h2>
+<p>To save the output, we can use the <code>-o</code> flag with the location and filename we wish to save. E.g. 
+<div class="highlight"><pre><span></span><code>cmipld wcrp-universe:activity/cmip -o cmip_activity.json
+</code></pre></div></p>
+<h2 id="rendering-all-items-in-a-directory">Rendering all items in a directory</h2>
+<p>Sometimes we might want to view all the items in a repository of directory. For this reason we can use the graph.jsonld file. </p>
+<p>For instance entering: </p>
+<p><div class="highlight"><pre><span></span><code>cmipld wcrp-universe:activity
+</code></pre></div>
+will resolve into 
+<div class="highlight"><pre><span></span><code>https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/graph.jsonld
+</code></pre></div>
+which outlines all the files in the repository and displays them. </p>
+<p><image src='/assets/demo_images/cli6.png'/></p>
+<hr />
+<p>Optional extras to fix (these were working but changes in the code have rendered them temporarily disabled in the current version):
+Compact view. 
+Context Inclusion</p>
 
 
 
