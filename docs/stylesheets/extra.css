@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 
+
+/* https://coolors.co/88ccf1-c1dff0-3587a4-2d848a-2d898b */
 .md-footer {
   background-color: transparent;
   backdrop-filter: blur(10px);
@@ -51,6 +53,9 @@ body{
 }
 
 *{
- 
   font-family: "Plus Jakarta Sans", serif;
+}
+
+a{
+  color: #88ccf1;
 }
