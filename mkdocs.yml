@@ -10,6 +10,9 @@ theme:
   plugins:
     - search
     - optimize
+    # - gen-files:
+    #   scripts:
+    #     - scripts/
 
   copyright: CCBY04 2023+ Daniel Ellis for the CMIP-IPO
   palette: 
