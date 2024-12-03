@@ -59,3 +59,11 @@ body{
 a{
   color: #88ccf1;
 }
+
+/* Style for iframes */
+iframe {
+  border: none; /* Removes the border */
+  overflow: hidden; /* Hides scrollbars */
+  width: 100%; /* Optional: Set iframe width to fill its container */
+  height: 500px; /* Set a default height; adjust as needed */
+}
