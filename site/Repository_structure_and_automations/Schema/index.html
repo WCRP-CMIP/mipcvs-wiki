@@ -9,25 +9,25 @@
       
       
       
-        <link rel="prev" href="../Downloading_all_Repos/">
+        <link rel="prev" href="../Processing_functions/">
       
       
-        <link rel="next" href="../../../What_is_JSONLD%3F/Use_and_Changes/">
+        <link rel="next" href="../Github_Actions/JSONLD_update/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
     
     
       
-        <title>Framing - MIP-CVs Documentation</title>
+        <title>Schema - MIP-CVs Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.6f8fc17f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#validating-json-ld-files" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -85,9 +90,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="MIP-CVs Documentation" class="md-header__button md-logo" aria-label="MIP-CVs Documentation" data-md-component="logo">
+    <a href="../.." title="MIP-CVs Documentation" class="md-header__button md-logo" aria-label="MIP-CVs Documentation" data-md-component="logo">
       
-  <img src="../../../assets/CMIP_Icon_CMYK_negative.svg" alt="logo">
+  <img src="../../assets/CMIP_Icon_CMYK_negative.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -104,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Framing
+              Schema
             
           </span>
         </div>
@@ -207,9 +212,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="MIP-CVs Documentation" class="md-nav__button md-logo" aria-label="MIP-CVs Documentation" data-md-component="logo">
+    <a href="../.." title="MIP-CVs Documentation" class="md-nav__button md-logo" aria-label="MIP-CVs Documentation" data-md-component="logo">
       
-  <img src="../../../assets/CMIP_Icon_CMYK_negative.svg" alt="logo">
+  <img src="../../assets/CMIP_Icon_CMYK_negative.svg" alt="logo">
 
     </a>
     MIP-CVs Documentation
@@ -224,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -279,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../CMIP-LD/Introduction/" class="md-nav__link">
+      <a href="../../CMIP-LD/Introduction/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -342,7 +347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Explore_the_data/Network/" class="md-nav__link">
+      <a href="../../Explore_the_data/Network/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -363,7 +368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Explore_the_data/The_different_types/" class="md-nav__link">
+      <a href="../../Explore_the_data/The_different_types/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -384,7 +389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Explore_the_data/treemap/" class="md-nav__link">
+      <a href="../../Explore_the_data/treemap/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -426,7 +431,7 @@
             
   
   <span class="md-ellipsis">
-    Github Actions
+    Interact with the data
   </span>
   
 
@@ -436,7 +441,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Github Actions
+            Interact with the data
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -447,15 +452,205 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Github_Actions/JSONLD_update/" class="md-nav__link">
+      <a href="../../Interact_with_the_data/%20_Introduction/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    JSONLD update
+      Introduction
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/Command_line_interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/Direct_Interaction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Direct Interaction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/PyLD/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyLD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/cmipLD_web_viewer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    cmipLD web viewer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    CMIP LD
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            CMIP LD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/CMIP-LD/CMIP-LD/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CMIP LD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/CMIP-LD/Downloading_all_Repos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Downloading all Repos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Interact_with_the_data/CMIP-LD/Framing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Framing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -491,7 +686,7 @@
             
   
   <span class="md-ellipsis">
-    How to use JSONLD
+    Repository structure and automations
   </span>
   
 
@@ -501,7 +696,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            How to use JSONLD
+            Repository structure and automations
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -512,11 +707,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../%20_Introduction/" class="md-nav__link">
+      <a href="../Context/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-      Introduction
+    Context
   </span>
   
 
@@ -533,11 +728,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Command_line_interface/" class="md-nav__link">
+      <a href="../Issue_templates/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Command line interface
+    Issue templates
   </span>
   
 
@@ -554,132 +749,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Direct_Interaction/" class="md-nav__link">
+      <a href="../Processing_functions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Direct Interaction
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../PyLD/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    PyLD
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../cmipLD_web_viewer/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    cmipLD web viewer
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    CMIP LD
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5_6">
-            <span class="md-nav__icon md-icon"></span>
-            CMIP LD
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../CMIP-LD/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CMIP LD
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Downloading_all_Repos/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Downloading all Repos
+    Processing functions
   </span>
   
 
@@ -703,16 +777,127 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Schema
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Framing
+    Schema
   </span>
   
 
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validating-json-ld-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating json-ld files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issue-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restful-esque-description-of-repository-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restful-esque description of repository contents
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Github Actions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Github Actions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Github_Actions/JSONLD_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JSONLD update
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -775,15 +960,100 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../What_is_JSONLD%3F/Use_and_Changes/" class="md-nav__link">
+      <a href="../../What_is_JSONLD%3F/Background/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Use and Changes
+    Background
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../What_is_JSONLD%3F/Defining_the_context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Defining the context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Example usage
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            Example usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../What_is_JSONLD%3F/Example_usage/Defining_the_context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Defining the context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -814,6 +1084,41 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validating-json-ld-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validating json-ld files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issue-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restful-esque-description-of-repository-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restful-esque description of repository contents
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -827,9 +1132,46 @@
                   
 
 
-  <h1>Framing</h1>
+  <h1>Schema</h1>
 
+<div class="admonition tip">
+<p class="admonition-title">Documentation in progress</p>
+<p>The schemas for each type still need to be defined. 
+For more rigorous checking of the contexts, Pydantic is used.  </p>
+</div>
+<p>JSON-schema is a method of validating the data presented within a JSON format. It is used to run CI checking of the data, as well as providing some additional features. Since JSON-LD is also valid JSON, all these checks should run as expected.   </p>
+<h2 id="validating-json-ld-files">Validating json-ld files</h2>
+<p>To validate a file using the schema, we can run the following. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cmipld.schema</span> <span class="kn">import</span> <span class="n">validate</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/&#39;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1">cmip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1">_schema_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="k">assert</span> <span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">schema</span><span class="p">)</span>
+</code></pre></div>
+<p>Alternatively there is also a pytest written to iteratively perform this function. 
+(To be inserted here at a later point.)</p>
+<h2 id="issue-templates">Issue templates</h2>
+<p>Another use for the _schema_ file is that we can use it to build an issue form for the submission or modification of existing data. 
+Here the <code>_context_</code> is used to create dropdown or checkbox items that need to be linked, and the schema defines additional information on which fields are optional or required. </p>
+<p>Once the issues templates are populated, a github action will process the results, update the issue, modify the relevant files and create a pull request for review by the community. </p>
+<pre class="mermaid"><code>flowchart TD
+    A[_schema_ file] --&gt;|Defines required/optional fields| B[Issue Form]
+    B --&gt;|Uses _context_ for dropdown/checkbox items| C[Populated Issue Templates]
+    C --&gt;|Triggered by submission| D[GitHub Action]
+    D --&gt;|Processes results| E[Updates Issue]
+    D --&gt;|Modifies relevant files| F[File Modification]
+    D --&gt;|Creates pull request| G[Pull Request]
+    F --&gt; G
+    G --&gt;|Reviewed by community| H[Final Approval]</code></pre>
+<p>For more information visit the <a href="" title="./Issue_templates.md">Issue Templates Page</a></p>
+<h2 id="restful-esque-description-of-repository-contents">Restful-esque description of repository contents</h2>
+<p>Although the current files are statically hosted using GitHub pages, we are still able to produce a description of the repository, its contents and the various fields in the json-ld files. </p>
+<p>To accomplish this we leverage the use of JavaScript with the automatic 404 - not found page. Here we are able to check of a directory exists, and what it contains by examining the <code>_context_</code> and <code>_schema_</code> files. This is then used to produce a summary of the repository contents, links, and field types for the json ld.</p>
+<p>(examples to be added here. )</p>
 
 
 
@@ -870,9 +1212,9 @@
           
             
             <a
-              href="../Downloading_all_Repos/"
+              href="../Processing_functions/"
               class="md-footer__link md-footer__link--prev"
-              aria-label="Previous: Downloading all Repos"
+              aria-label="Previous: Processing functions"
             >
               <div class="md-footer__button md-icon">
                 
@@ -883,7 +1225,7 @@
                   Previous
                 </span>
                 <div class="md-ellipsis">
-                  Downloading all Repos
+                  Processing functions
                 </div>
               </div>
             </a>
@@ -893,16 +1235,16 @@
           
             
             <a
-              href="../../../What_is_JSONLD%3F/Use_and_Changes/"
+              href="../Github_Actions/JSONLD_update/"
               class="md-footer__link md-footer__link--next"
-              aria-label="Next: Use and Changes"
+              aria-label="Next: JSONLD update"
             >
               <div class="md-footer__title">
                 <span class="md-footer__direction">
                   Next
                 </span>
                 <div class="md-ellipsis">
-                  Use and Changes
+                  JSONLD update
                 </div>
               </div>
               <div class="md-footer__button md-icon">
@@ -924,12 +1266,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.footer", "search.suggest", "header.autohide"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.footer", "search.suggest", "header.autohide"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
-        <script src="../../../scripts/embed.js"></script>
+        <script src="../../scripts/embed.js"></script>
       
     
   </body>
