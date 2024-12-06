@@ -31,6 +31,8 @@ extra_css:
 markdown_extensions:
   - admonition
   - pymdownx.details
+  - attr_list
+  - md_in_html
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
