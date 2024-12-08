@@ -15,7 +15,7 @@ To validate a file using the schema, we can run the following.
 from cmipld.schema import validate
 import requests
 
-base = 'https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/'
+base = 'https://wcrp-cmip.github.io/WCRP-universe/activity/'
 
 data = requests.get(f'{base}cmip').json()
 schema = requests.get(f'{base}_schema_').json()

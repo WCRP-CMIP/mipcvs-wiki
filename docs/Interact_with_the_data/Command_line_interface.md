@@ -85,7 +85,7 @@ cmipld wcrp-universe:activity
 ```
 will resolve into 
 ```
-https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/graph.jsonld
+https://wcrp-cmip.github.io/WCRP-universe/activity/graph.jsonld
 ```
 which outlines all the files in the repository and displays them. 
 

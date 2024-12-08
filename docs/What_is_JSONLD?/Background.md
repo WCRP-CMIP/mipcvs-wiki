@@ -66,11 +66,11 @@ The context file defines how this shall be treated, where the files are located,
                     
                     // add any external prefixes. 
                     "cmip7": "https://wcrp-cmip.github.io/CMIP7_CVs/",
-                    "wcrp-universe": "https://wcrp-cmip.github.io/WCRP-UNIVERSE/"
+                    "wcrp-universe": "https://wcrp-cmip.github.io/WCRP-universe/"
 
                     // define information for fields which may be linked. 
                     "activity": {
-                                    "@context": "https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/_context_",
+                                    "@context": "https://wcrp-cmip.github.io/WCRP-universe/activity/_context_",
                                     "@type": "@id",
                             }
     },
