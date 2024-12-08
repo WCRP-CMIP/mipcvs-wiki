@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
     
     
       
@@ -1145,7 +1145,7 @@ For more rigorous checking of the contexts, Pydantic is used.  </p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">cmipld.schema</span> <span class="kn">import</span> <span class="n">validate</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;https://wcrp-cmip.github.io/WCRP-UNIVERSE/activity/&#39;</span>
+<span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;https://wcrp-cmip.github.io/WCRP-universe/activity/&#39;</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1">cmip&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="n">schema</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s1">_schema_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
