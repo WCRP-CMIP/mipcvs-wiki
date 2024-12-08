@@ -23,7 +23,7 @@ Rather than remembering this whole link, we are also able to use the pre-defined
 This means that to get to the same page, we can now type 
 
 ```
-wcrp-universe:activity/cmip
+universal:activity/cmip
 ```
 
 ### Getting The result

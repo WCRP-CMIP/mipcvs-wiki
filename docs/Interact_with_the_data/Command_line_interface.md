@@ -40,7 +40,7 @@ options:
 The simplest use case is to view the url of a given file. The function recursively populates all the links if they exist. 
 
 ``` 
-cmipld wcrp-universe:activity/cmip
+cmipld universal:activity/cmip
 ```
 
 This will give us in interactive view of the returned result. 
@@ -73,7 +73,7 @@ To open all the links currently present in the JSONLD file we can use the `--dep
 ## Saving the output 
 To save the output, we can use the `-o` flag with the location and filename we wish to save. E.g. 
 ```
-cmipld wcrp-universe:activity/cmip -o cmip_activity.json
+cmipld universal:activity/cmip -o cmip_activity.json
 ```
 ## Rendering all items in a directory
 Sometimes we might want to view all the items in a repository of directory. For this reason we can use the graph.jsonld file. 
@@ -81,7 +81,7 @@ Sometimes we might want to view all the items in a repository of directory. For 
 For instance entering: 
 
 ```
-cmipld wcrp-universe:activity
+cmipld universal:activity
 ```
 will resolve into 
 ```
