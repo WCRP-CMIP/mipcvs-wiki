@@ -242,13 +242,15 @@ def run(issue, packet):
     git.newpull(title, author, json.dumps(issue, indent=4), title, os.environ['ISSUE_NUMBER'])
 ```
 
-### Mermaid Diagram
+
+
+## Quick summary of the submission process 
 ```mermaid
 graph TB
   A[Run Script] --> B[Update Summary: Issue Content]
   B --> C[Update Issue Title and Create Branch]
-  C --> D[Run Similarity Check]
-  D --> E[Update Summary: Data Content]
+  C --> D[Run Checks]
+  D --> E[Update Summary: (Data Content)]
   E --> F[Write Data to File]
   F --> G[Commit Changes]
   G --> H[Create Pull Request]
