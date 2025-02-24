@@ -1018,20 +1018,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Issue specific script: Processing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mermaid-diagram" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-summary-of-the-submission-process" class="md-nav__link">
     <span class="md-ellipsis">
-      Mermaid Diagram
+      Quick summary of the submission process
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1521,20 +1515,14 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Issue specific script: Processing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mermaid-diagram" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-summary-of-the-submission-process" class="md-nav__link">
     <span class="md-ellipsis">
-      Mermaid Diagram
+      Quick summary of the submission process
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1739,12 +1727,12 @@ We then checkout the repository, and run a set of python scripts. As the python 
     <span class="n">git</span><span class="o">.</span><span class="n">commit_one</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;New entry </span><span class="si">{</span><span class="n">acronym</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">issue</span><span class="p">[</span><span class="s2">&quot;issue_type&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> files.&#39;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="n">git</span><span class="o">.</span><span class="n">newpull</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">issue</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;ISSUE_NUMBER&#39;</span><span class="p">])</span>
 </code></pre></div>
-<h3 id="mermaid-diagram">Mermaid Diagram</h3>
+<h2 id="quick-summary-of-the-submission-process">Quick summary of the submission process</h2>
 <pre class="mermaid"><code>graph TB
   A[Run Script] --&gt; B[Update Summary: Issue Content]
   B --&gt; C[Update Issue Title and Create Branch]
-  C --&gt; D[Run Similarity Check]
-  D --&gt; E[Update Summary: Data Content]
+  C --&gt; D[Run Checks]
+  D --&gt; E[Update Summary: (Data Content)]
   E --&gt; F[Write Data to File]
   F --&gt; G[Commit Changes]
   G --&gt; H[Create Pull Request]</code></pre>
