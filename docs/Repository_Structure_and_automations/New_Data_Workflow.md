@@ -93,7 +93,7 @@ On submission, the pre-allocated labels are appended:
 
 <image src='/assets/demo_images/issues_created.png'/>
 
-and the form content saved in its body. 
+and the form content saved as the main issue. 
 
 <image src='/assets/demo_images/issue_submission.png'/>
 
@@ -110,6 +110,9 @@ on:
   issues:
     types: [opened, edited]
 ```
+
+This means that should a submission need to be edited, the checks will run again until the relevant sections pass or the issue is closed. 
+
 #### permissions
 For workflows which need to interact with the repository, we need to define what the action is allowed to do. In this case, we can change the issue, repository content and create a pull request. 
 ```yaml
@@ -163,7 +166,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
           new_issue
 ```
 
-## CMIPLD command line scripts. 
+### CMIPLD command line scripts. 
 When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the `new_issue` command executes the `main` function from [`cmipld.generate.new_issue`](https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py). 
 
 This starts by parsing the issue content: 
@@ -188,7 +191,7 @@ module.run(parsed_issue,issue)
 ```
 
 
-## Issue specific script: Processing
+### Issue specific script: Processing
 The scripts for each issue will be placed in the `.github/ISSUE_SCRIPT/` directory and will have the same name as the issue_type (see above). 
 
 
@@ -248,7 +251,7 @@ def run(issue, packet):
 The pull request is also linked to the issue, allowing it to be closed on merge. 
 <image src='/assets/demo_images/action_pull.png'/>
 
-## Action output. 
+### Action output. 
 It is possible to view the status of the action under the actions tab in GitHub. Here we can select the relevant action, view what has been run, and the console output from this (should an error occur). 
 
 Additionally when opening a specific action, the action summary has been updated to provide an update of what has been done. An example of this can be seen below. 
