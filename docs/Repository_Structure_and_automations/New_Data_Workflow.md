@@ -87,7 +87,7 @@ If our template yml file is correctly formatted we should be able to select if f
 
 From here we are able open the relevant form, completing any required fields. 
 
-<image src='/assets/demo_images/issue_template.png'/>
+<image src='/assets/demo_images/issue_form.png'/>
 
 On submission, the pre-allocated labels are appended:
 
