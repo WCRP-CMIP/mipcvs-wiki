@@ -113,7 +113,7 @@ on:
 
 This means that should a submission need to be edited, the checks will run again until the relevant sections pass or the issue is closed. 
 
-#### permissions
+#### Permissions
 For workflows which need to interact with the repository, we need to define what the action is allowed to do. In this case, we can change the issue, repository content and create a pull request. 
 ```yaml
 permissions:
