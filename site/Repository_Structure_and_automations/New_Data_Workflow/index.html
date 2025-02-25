@@ -997,12 +997,7 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#cmipld-command-line-scripts" class="md-nav__link">
     <span class="md-ellipsis">
       CMIPLD command line scripts.
@@ -1010,8 +1005,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#issue-specific-script-processing" class="md-nav__link">
     <span class="md-ellipsis">
       Issue specific script: Processing
@@ -1019,13 +1014,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#action-output" class="md-nav__link">
     <span class="md-ellipsis">
       Action output.
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1503,12 +1503,7 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#cmipld-command-line-scripts" class="md-nav__link">
     <span class="md-ellipsis">
       CMIPLD command line scripts.
@@ -1516,8 +1511,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#issue-specific-script-processing" class="md-nav__link">
     <span class="md-ellipsis">
       Issue specific script: Processing
@@ -1525,13 +1520,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#action-output" class="md-nav__link">
     <span class="md-ellipsis">
       Action output.
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1626,7 +1626,7 @@ If our template yml file is correctly formatted we should be able to select if f
 <p><image src='/assets/demo_images/issue_form.png'/></p>
 <p>On submission, the pre-allocated labels are appended:</p>
 <p><image src='/assets/demo_images/issues_created.png'/></p>
-<p>and the form content saved in its body. </p>
+<p>and the form content saved as the main issue. </p>
 <p><image src='/assets/demo_images/issue_submission.png'/></p>
 <h2 id="workflow">Workflow</h2>
 <p>When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in <code>.github/workflows</code>, with the components of the issue specific workflow <a href="https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml">new_issue.yml</a> being outlined below. </p>
@@ -1637,6 +1637,7 @@ If our template yml file is correctly formatted we should be able to select if f
 <span class="w">  </span><span class="nt">issues</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">opened</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">edited</span><span class="p p-Indicator">]</span>
 </code></pre></div></p>
+<p>This means that should a submission need to be edited, the checks will run again until the relevant sections pass or the issue is closed. </p>
 <h4 id="permissions">permissions</h4>
 <p>For workflows which need to interact with the repository, we need to define what the action is allowed to do. In this case, we can change the issue, repository content and create a pull request. 
 <div class="highlight"><pre><span></span><code><span class="nt">permissions</span><span class="p">:</span>
@@ -1678,7 +1679,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">          </span><span class="no">new_issue</span>
 </code></pre></div>
-<h2 id="cmipld-command-line-scripts">CMIPLD command line scripts.</h2>
+<h3 id="cmipld-command-line-scripts">CMIPLD command line scripts.</h3>
 <p>When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the <code>new_issue</code> command executes the <code>main</code> function from <a href="https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py"><code>cmipld.generate.new_issue</code></a>. </p>
 <p>This starts by parsing the issue content: 
 <div class="highlight"><pre><span></span><code><span class="n">issue</span> <span class="o">=</span> <span class="n">get_issue</span><span class="p">()</span>
@@ -1695,7 +1696,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
 <p>Finally we execute the <code>run</code> function of the newly imported module and provide it with the issue content, and respective number. 
 <div class="highlight"><pre><span></span><code><span class="n">module</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parsed_issue</span><span class="p">,</span><span class="n">issue</span><span class="p">)</span>
 </code></pre></div></p>
-<h2 id="issue-specific-script-processing">Issue specific script: Processing</h2>
+<h3 id="issue-specific-script-processing">Issue specific script: Processing</h3>
 <p>The scripts for each issue will be placed in the <code>.github/ISSUE_SCRIPT/</code> directory and will have the same name as the issue_type (see above). </p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -1750,7 +1751,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
 </code></pre></div>
 <p>The pull request is also linked to the issue, allowing it to be closed on merge. 
 <image src='/assets/demo_images/action_pull.png'/></p>
-<h2 id="action-output">Action output.</h2>
+<h3 id="action-output">Action output.</h3>
 <p>It is possible to view the status of the action under the actions tab in GitHub. Here we can select the relevant action, view what has been run, and the console output from this (should an error occur). </p>
 <p>Additionally when opening a specific action, the action summary has been updated to provide an update of what has been done. An example of this can be seen below. </p>
 <p><image src='/assets/demo_images/action_verbose.png'/></p>
