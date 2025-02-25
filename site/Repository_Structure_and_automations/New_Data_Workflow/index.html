@@ -1021,6 +1021,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#action-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Action output.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-summary-of-the-submission-process" class="md-nav__link">
     <span class="md-ellipsis">
       Quick summary of the submission process
@@ -1518,6 +1527,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#action-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Action output.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-summary-of-the-submission-process" class="md-nav__link">
     <span class="md-ellipsis">
       Quick summary of the submission process
@@ -1601,12 +1619,15 @@
 <h3 id="dynamic-web-form">Dynamic Web-Form</h3>
 <p>Although not currently available, the future plans is to replicate the web form on the mipcvs.dev server. This will constitute a fastAPI server which can access the suitability of a field as it is being entered. This will mean that any errors are flagged during entry, and do not require a review, edit, test loop. The end result from the website will still be the creation of a new issue, which upon submission triggers the same post-processing functions. </p>
 <h2 id="submitting-a-new-issue">Submitting a new issue</h2>
-<p>To submit a new form we start by going to the Issues tab on github. </p>
-<p><image></p>
-<p>Here if our template yml file is correctly formatted we should be able to select if from the list of available templates. </p>
-<p><image></p>
+<p>To submit a new form we start by going to the Issues tab on github. 
+If our template yml file is correctly formatted we should be able to select if from the list of available templates. </p>
+<p><image src='/assets/demo_images/issue_options.png'/></p>
 <p>From here we are able open the relevant form, completing any required fields. </p>
-<p>On submission, the pre-allocated labels are appended. </p>
+<p><image src='/assets/demo_images/issue_template.png'/></p>
+<p>On submission, the pre-allocated labels are appended:</p>
+<p><image src='/assets/demo_images/issues_created.png'/></p>
+<p>and the form content saved in its body. </p>
+<p><image src='/assets/demo_images/issue_submission.png'/></p>
 <h2 id="workflow">Workflow</h2>
 <p>When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in <code>.github/workflows</code>, with the components of the issue specific workflow <a href="https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml">new_issue.yml</a> being outlined below. </p>
 <h3 id="workflow-content">Workflow content</h3>
@@ -1727,6 +1748,12 @@ We then checkout the repository, and run a set of python scripts. As the python 
     <span class="n">git</span><span class="o">.</span><span class="n">commit_one</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;New entry </span><span class="si">{</span><span class="n">acronym</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">issue</span><span class="p">[</span><span class="s2">&quot;issue_type&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> files.&#39;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="n">git</span><span class="o">.</span><span class="n">newpull</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">issue</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;ISSUE_NUMBER&#39;</span><span class="p">])</span>
 </code></pre></div>
+<p>The pull request is also linked to the issue, allowing it to be closed on merge. 
+<image src='/assets/demo_images/action_pull.png'/></p>
+<h2 id="action-output">Action output.</h2>
+<p>It is possible to view the status of the action under the actions tab in GitHub. Here we can select the relevant action, view what has been run, and the console output from this (should an error occur). </p>
+<p>Additionally when opening a specific action, the action summary has been updated to provide an update of what has been done. An example of this can be seen below. </p>
+<p><image src='/assets/demo_images/action_verbose.png'/></p>
 <!-- <image src='/assets/demo_images/cli4.png'/> -->
 <h2 id="quick-summary-of-the-submission-process">Quick summary of the submission process</h2>
 <pre class="mermaid"><code>graph TB
