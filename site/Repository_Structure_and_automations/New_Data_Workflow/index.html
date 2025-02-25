@@ -1551,9 +1551,9 @@
     - Dynamic website form</p>
 <h3 id="github-form">GitHub form</h3>
 <p>Github issue templates can be used to guide input in the form of markdown files. More recently the option to use a yml file to create a form has been added. Using this we define an input form with relevant descriptions which once filled creates a formatted issue. </p>
-<p>For more information on the syntax (click here)[https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema]</p>
+<p>For more information on the syntax <a href="https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema">click here</a></p>
 <h4 id="where-are-the-issue-forms">Where are the issue forms?</h4>
-<p>Issue forms reside in the <code>.workflows/ISSUE_TEMPLATE/</code> directory. Here we explore the structure of the (<code>add_institution.yml</code>)[https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/ISSUE_TEMPLATE/add_institution.yml] template. The structure of this is described below: </p>
+<p>Issue forms reside in the <code>.workflows/ISSUE_TEMPLATE/</code> directory. Here we explore the structure of the <a href="https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/ISSUE_TEMPLATE/add_institution.yml"><code>add_institution.yml</code></a> template. The structure of this is described below: </p>
 <h5 id="issue-labels">Issue Labels</h5>
 <p>Exploring the source code we can assign automatic labels for when the issue is created: 
 <div class="highlight"><pre><span></span><code><span class="nt">labels</span><span class="p">:</span>
@@ -1608,7 +1608,7 @@
 <p>From here we are able open the relevant form, completing any required fields. </p>
 <p>On submission, the pre-allocated labels are appended. </p>
 <h2 id="workflow">Workflow</h2>
-<p>When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in <code>.github/workflows</code>, with the components of the issue specific workflow (new_issue.yml)[https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml] being outlined below. </p>
+<p>When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in <code>.github/workflows</code>, with the components of the issue specific workflow <a href="https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml">new_issue.yml</a> being outlined below. </p>
 <h3 id="workflow-content">Workflow content</h3>
 <h4 id="triggers">Triggers</h4>
 <p>The on section of a workflow outlines when an issue is run. Common triggers are on push, issue opened/closed, cron and dispatch. 
@@ -1633,7 +1633,7 @@ Instead of duplicating the same processing scripts in every repository we make u
 <span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WCRP-CMIP/CMIP-LD/actions/new-issue@main</span>
 </code></pre></div>
 <h3 id="reusable-actions">Reusable Actions.</h3>
-<p>The reusable action is located as part of the (CMIP-LD repository)[https://github.com/WCRP-CMIP/CMIP-LD/blob/main/actions/new-issue/action.yml]. </p>
+<p>The reusable action is located as part of the <a href="https://github.com/WCRP-CMIP/CMIP-LD/blob/main/actions/new-issue/action.yml">CMIP-LD repository</a>. </p>
 <p>Here the action begins by installing the cmipld python library
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cmip-ld library</span>
 <span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">install-cmipld</span>
@@ -1658,7 +1658,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
 <span class="w">          </span><span class="no">new_issue</span>
 </code></pre></div>
 <h2 id="cmipld-command-line-scripts">CMIPLD command line scripts.</h2>
-<p>When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the <code>new_issue</code> command executes the <code>main</code> function from (<code>cmipld.generate.new_issue</code>)[https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py]. </p>
+<p>When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the <code>new_issue</code> command executes the <code>main</code> function from <a href="https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py"><code>cmipld.generate.new_issue</code></a>. </p>
 <p>This starts by parsing the issue content: 
 <div class="highlight"><pre><span></span><code><span class="n">issue</span> <span class="o">=</span> <span class="n">get_issue</span><span class="p">()</span>
 <span class="n">parsed_issue</span> <span class="o">=</span> <span class="n">parse_issue_body</span><span class="p">(</span><span class="n">issue</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">])</span>
@@ -1727,12 +1727,13 @@ We then checkout the repository, and run a set of python scripts. As the python 
     <span class="n">git</span><span class="o">.</span><span class="n">commit_one</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;New entry </span><span class="si">{</span><span class="n">acronym</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">issue</span><span class="p">[</span><span class="s2">&quot;issue_type&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> files.&#39;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
     <span class="n">git</span><span class="o">.</span><span class="n">newpull</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">issue</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;ISSUE_NUMBER&#39;</span><span class="p">])</span>
 </code></pre></div>
+<!-- <image src='/assets/demo_images/cli4.png'/> -->
 <h2 id="quick-summary-of-the-submission-process">Quick summary of the submission process</h2>
 <pre class="mermaid"><code>graph TB
   A[Run Script] --&gt; B[Update Summary: Issue Content]
   B --&gt; C[Update Issue Title and Create Branch]
   C --&gt; D[Run Checks]
-  D --&gt; E[Update Summary: (Data Content)]
+  D --&gt; E[Update Summary: Data Content]
   E --&gt; F[Write Data to File]
   F --&gt; G[Commit Changes]
   G --&gt; H[Create Pull Request]</code></pre>
