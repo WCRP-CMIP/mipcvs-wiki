@@ -79,20 +79,23 @@ Although not currently available, the future plans is to replicate the web form 
 ## Submitting a new issue
 
 To submit a new form we start by going to the Issues tab on github. 
+If our template yml file is correctly formatted we should be able to select if from the list of available templates. 
 
-<image>
 
-Here if our template yml file is correctly formatted we should be able to select if from the list of available templates. 
+<image src='/assets/demo_images/issue_options.png'/>
 
-<image>
 
 From here we are able open the relevant form, completing any required fields. 
 
+<image src='/assets/demo_images/issue_template.png'/>
 
+On submission, the pre-allocated labels are appended:
 
-On submission, the pre-allocated labels are appended. 
+<image src='/assets/demo_images/issues_created.png'/>
 
+and the form content saved in its body. 
 
+<image src='/assets/demo_images/issue_submission.png'/>
 
 ## Workflow
 
@@ -241,6 +244,16 @@ def run(issue, packet):
     git.commit_one(outfile, author, comment=f'New entry {acronym} in {issue["issue_type"]} files.', branch=title)
     git.newpull(title, author, json.dumps(issue, indent=4), title, os.environ['ISSUE_NUMBER'])
 ```
+
+The pull request is also linked to the issue, allowing it to be closed on merge. 
+<image src='/assets/demo_images/action_pull.png'/>
+
+## Action output. 
+It is possible to view the status of the action under the actions tab in GitHub. Here we can select the relevant action, view what has been run, and the console output from this (should an error occur). 
+
+Additionally when opening a specific action, the action summary has been updated to provide an update of what has been done. An example of this can be seen below. 
+
+<image src='/assets/demo_images/action_verbose.png'/>
 
 
 
