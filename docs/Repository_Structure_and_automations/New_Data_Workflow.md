@@ -12,10 +12,10 @@ There are two planned routes for entering the required data:
 ### GitHub form
 Github issue templates can be used to guide input in the form of markdown files. More recently the option to use a yml file to create a form has been added. Using this we define an input form with relevant descriptions which once filled creates a formatted issue. 
 
-For more information on the syntax (click here)[https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema]
+For more information on the syntax [click here](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema)
 
 #### Where are the issue forms?
-Issue forms reside in the `.workflows/ISSUE_TEMPLATE/` directory. Here we explore the structure of the (`add_institution.yml`)[https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/ISSUE_TEMPLATE/add_institution.yml] template. The structure of this is described below: 
+Issue forms reside in the `.workflows/ISSUE_TEMPLATE/` directory. Here we explore the structure of the [`add_institution.yml`](https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/ISSUE_TEMPLATE/add_institution.yml) template. The structure of this is described below: 
 
 ##### Issue Labels
 Exploring the source code we can assign automatic labels for when the issue is created: 
@@ -96,7 +96,7 @@ On submission, the pre-allocated labels are appended.
 
 ## Workflow
 
-When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in `.github/workflows`, with the components of the issue specific workflow (new_issue.yml)[https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml] being outlined below. 
+When an issue is created or changed, we want to be able to run a series of scripts. These are called workflows. A workflow is defined in `.github/workflows`, with the components of the issue specific workflow [new_issue.yml](https://github.com/WCRP-CMIP/WCRP-universe/blob/Institution_UCLA/.github/workflows/new_issue.yml) being outlined below. 
 
 ### Workflow content 
 
@@ -130,7 +130,7 @@ Instead of duplicating the same processing scripts in every repository we make u
 
 ### Reusable Actions. 
 
-The reusable action is located as part of the (CMIP-LD repository)[https://github.com/WCRP-CMIP/CMIP-LD/blob/main/actions/new-issue/action.yml]. 
+The reusable action is located as part of the [CMIP-LD repository](https://github.com/WCRP-CMIP/CMIP-LD/blob/main/actions/new-issue/action.yml). 
 
 Here the action begins by installing the cmipld python library
 ```yaml
@@ -161,7 +161,7 @@ We then checkout the repository, and run a set of python scripts. As the python 
 ```
 
 ## CMIPLD command line scripts. 
-When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the `new_issue` command executes the `main` function from (`cmipld.generate.new_issue`)[https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py]. 
+When installing a python package, we are able to define entry-points. These are python functions which can be run as command line scripts. For example the `new_issue` command executes the `main` function from [`cmipld.generate.new_issue`](https://github.com/WCRP-CMIP/CMIP-LD/blob/main/cmipld/generate/new_issue.py). 
 
 This starts by parsing the issue content: 
 ```python     
@@ -244,14 +244,14 @@ def run(issue, packet):
 
 
 
-
+<!-- <image src='/assets/demo_images/cli4.png'/> -->
 ## Quick summary of the submission process 
 ```mermaid
 graph TB
   A[Run Script] --> B[Update Summary: Issue Content]
   B --> C[Update Issue Title and Create Branch]
   C --> D[Run Checks]
-  D --> E[Update Summary: (Data Content)]
+  D --> E[Update Summary: Data Content]
   E --> F[Write Data to File]
   F --> G[Commit Changes]
   G --> H[Create Pull Request]
